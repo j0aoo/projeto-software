@@ -16,6 +16,9 @@ public class mainLog extends javax.swing.JFrame {
      */
     public mainLog() {
         initComponents();
+        setResizable(false);
+        setLocationRelativeTo(this);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     /**
@@ -41,6 +44,11 @@ public class mainLog extends javax.swing.JFrame {
 
         jToggleButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jToggleButton1.setText("Continuar");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -70,6 +78,22 @@ public class mainLog extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+
+        if (jComboBox1.getSelectedIndex() == 1) {
+        
+            new LoginSecretaria().setVisible(true);
+            dispose();
+        
+        } else if (jComboBox1.getSelectedIndex() == 2) {
+            
+            new loginAdmin().setVisible(true);
+            dispose();
+        
+        }
+
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     /**
      * @param args the command line arguments

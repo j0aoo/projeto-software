@@ -1,0 +1,62 @@
+rot
+
+• banco
+
+- admin 
+id
+login
+senha
+tipoUsuario
+senhaExtra
+
+- secretaria 
+
+id
+login
+senha
+tipoUsuario
+nome
+endereco 
+cpf
+rg
+telefone
+
+- clientes
+
+id_cliente
+nome
+email
+cpf
+telefone
+endereco
+
+-servicos
+id_serv
+indicacao
+preco
+disponibilidade
+desconto
+
+- animais
+id_animal
+nome
+tipo
+raca
+tamanho
+peso
+idade
+
+- compra 
+id_compra
+cpf_cliente
+id_animal
+listaServ
+desconto
+total
+formaPagamento
+
+
+
+
+
+
