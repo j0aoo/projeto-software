@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 17-Fev-2019 às 02:02
+-- Generation Time: 23-Fev-2019 às 11:17
 -- Versão do servidor: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -32,9 +32,15 @@ CREATE TABLE `admin` (
   `id` int(11) NOT NULL,
   `login` varchar(20) NOT NULL,
   `senha` varchar(20) NOT NULL,
-  `senhaExtra` varchar(20) DEFAULT NULL,
-  `tipo_user` int(11) NOT NULL
+  `senhaExtra` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `admin`
+--
+
+INSERT INTO `admin` (`id`, `login`, `senha`, `senhaExtra`) VALUES
+(1, 'jaoo', '123', '1234');
 
 -- --------------------------------------------------------
 
@@ -52,6 +58,13 @@ CREATE TABLE `animais` (
   `idade` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Extraindo dados da tabela `animais`
+--
+
+INSERT INTO `animais` (`id_animal`, `nome`, `tipo`, `raca`, `tamanho`, `peso`, `idade`) VALUES
+(1, 'rex', 'rex', 'rex', 12, 12, 12);
+
 -- --------------------------------------------------------
 
 --
@@ -66,6 +79,13 @@ CREATE TABLE `clientes` (
   `telefone` varchar(16) NOT NULL,
   `endereco` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `clientes`
+--
+
+INSERT INTO `clientes` (`id_cliente`, `nome`, `email`, `cpf`, `telefone`, `endereco`) VALUES
+(1, 'teste', 'teste', '111.111.111-11', '(11) 9 1111-1111', 'tste');
 
 -- --------------------------------------------------------
 
@@ -93,7 +113,6 @@ CREATE TABLE `secretaria` (
   `id` int(11) NOT NULL,
   `login` varchar(20) NOT NULL,
   `senha` varchar(20) NOT NULL,
-  `tipo_user` int(11) NOT NULL,
   `nome` varchar(70) NOT NULL,
   `endereco` varchar(50) DEFAULT NULL,
   `cpf` varchar(20) NOT NULL,
@@ -105,8 +124,9 @@ CREATE TABLE `secretaria` (
 -- Extraindo dados da tabela `secretaria`
 --
 
-INSERT INTO `secretaria` (`id`, `login`, `senha`, `tipo_user`, `nome`, `endereco`, `cpf`, `rg`, `telefone`) VALUES
-(1, 'joao', '123', 1, 'joao', 'bla', '11111', '11111', '11111');
+INSERT INTO `secretaria` (`id`, `login`, `senha`, `nome`, `endereco`, `cpf`, `rg`, `telefone`) VALUES
+(1, 'joao', '123', 'joao', 'bla', '11111', '11111', '11111'),
+(2, 'teste', '123', 'a', 'a', '111.111.111-11', '111.111.111-11', '(11) 9 1111-1111');
 
 -- --------------------------------------------------------
 
@@ -121,6 +141,13 @@ CREATE TABLE `servicos` (
   `disponibilidade` varchar(50) DEFAULT NULL,
   `desconto` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `servicos`
+--
+
+INSERT INTO `servicos` (`id_serv`, `indicacao`, `preco`, `disponibilidade`, `desconto`) VALUES
+(1, 'gatos', 12, '12', 23);
 
 --
 -- Indexes for dumped tables
@@ -171,19 +198,19 @@ ALTER TABLE `servicos`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `animais`
 --
 ALTER TABLE `animais`
-  MODIFY `id_animal` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_animal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `compra`
@@ -195,13 +222,13 @@ ALTER TABLE `compra`
 -- AUTO_INCREMENT for table `secretaria`
 --
 ALTER TABLE `secretaria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `servicos`
 --
 ALTER TABLE `servicos`
-  MODIFY `id_serv` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_serv` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
