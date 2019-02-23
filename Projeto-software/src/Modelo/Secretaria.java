@@ -4,7 +4,6 @@ public class Secretaria {
     private int id;
     private String login;
     private String senha;
-    private int tipo_user;
     private String nome;
     private String endereco;
     private String cpf;
@@ -33,14 +32,6 @@ public class Secretaria {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public int getTipo_user() {
-        return tipo_user;
-    }
-
-    public void setTipo_user(int tipo_user) {
-        this.tipo_user = tipo_user;
     }
 
     public String getNome() {

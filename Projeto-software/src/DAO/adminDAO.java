@@ -44,4 +44,32 @@ public class adminDAO extends ExecuteSQL {
         
     }
     
+    public String Inserir_Admin(Admin a) {
+
+        try {
+        
+            String sql = "insert into admin values(0,?,?,?)";
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ps.setString(1, a.getLogin());
+            ps.setString(2, a.getSenha());
+            ps.setString(3, a.getSenhaExtra());
+            
+            if (ps.executeUpdate()> 0) {
+                
+                return "Inserido com sucesso!";
+                
+            } else {
+                
+                return "Erro ao inserir!";
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return e.getMessage();
+            
+        }
+        
+    }
+    
 }

@@ -5,6 +5,12 @@
  */
 package Visao.Cadastrar;
 
+import DAO.Conexao;
+import java.sql.Connection;
+import javax.swing.JOptionPane;
+import Modelo.*;
+import DAO.*;
+
 /**
  *
  * @author Usuario
@@ -21,6 +27,52 @@ public class CadastrarAnimais extends javax.swing.JFrame {
         setLocationRelativeTo(this);
     }
 
+    public void inserirAnimais() {
+        
+        String nome = jtfNome.getText();
+        String tipo = jtfTipo.getText();
+        String raca = jtfRaca.getText();
+        String tamanho = jtfTamanho.getText();
+        String peso = jtfPeso.getText();
+        String idade = jtfIdade.getText();
+        
+        if (nome.equals("") && tipo.equals("") && raca.equals("") && tamanho.equals("") && peso.equals("") && idade.equals("")) {
+            
+            JOptionPane.showMessageDialog(null, "Nenhum campo pode estar vazio!", "", JOptionPane.WARNING_MESSAGE);
+            
+        } else {
+            
+            Connection con = Conexao.AbrirConexao();
+            AnimalDAO sql = new AnimalDAO(con);
+            Animal a = new Animal();
+            
+            double tama = Double.parseDouble(tamanho);
+            double pes = Double.parseDouble(peso);
+            int idad = Integer.parseInt(idade);
+            
+            a.setNome(nome);
+            a.setTipo(nome);
+            a.setRaca(nome);
+            a.setTamanho(tama);
+            a.setPeso(pes);
+            a.setIdade(idad);
+
+            sql.Inserir_Animal(a);
+            Conexao.FecharConexao(con);
+            
+            jtfNome.setText("");
+            jtfIdade.setText("");
+            jtfPeso.setText("");
+            jtfRaca.setText("");
+            jtfTamanho.setText("");
+            jtfTipo.setText("");
+                    
+            JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!", "", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+            
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,13 +90,13 @@ public class CadastrarAnimais extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        jtfNome = new javax.swing.JTextField();
+        jtfTipo = new javax.swing.JTextField();
+        jtfPeso = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        jtfRaca = new javax.swing.JTextField();
+        jtfTamanho = new javax.swing.JTextField();
+        jtfIdade = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -85,17 +137,29 @@ public class CadastrarAnimais extends javax.swing.JFrame {
 
         jLabel9.setText("Peso:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jtfNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jtfNomeActionPerformed(evt);
+            }
+        });
+
+        jtfPeso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfPesoActionPerformed(evt);
             }
         });
 
         jLabel10.setText("Idade:");
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        jtfRaca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                jtfRacaActionPerformed(evt);
+            }
+        });
+
+        jtfTamanho.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfTamanhoActionPerformed(evt);
             }
         });
 
@@ -112,22 +176,22 @@ public class CadastrarAnimais extends javax.swing.JFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField2)
+                    .addComponent(jtfTipo)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jtfRaca, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtfTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
                                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jtfIdade, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtfPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(305, Short.MAX_VALUE))
         );
@@ -139,17 +203,17 @@ public class CadastrarAnimais extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
+                            .addComponent(jtfNome, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtfTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(19, 19, 19)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtfRaca, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jtfIdade, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
@@ -157,8 +221,8 @@ public class CadastrarAnimais extends javax.swing.JFrame {
                         .addGap(4, 4, 4))
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jtfTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtfPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -172,6 +236,11 @@ public class CadastrarAnimais extends javax.swing.JFrame {
         });
 
         jButton2.setText("Cadastrar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -221,18 +290,39 @@ public class CadastrarAnimais extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jtfNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfNomeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jtfNomeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void jtfRacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfRacaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_jtfRacaActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+
+        inserirAnimais();
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jtfPesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfPesoActionPerformed
+        // TODO add your handling code here:
+        
+        inserirAnimais();
+
+    }//GEN-LAST:event_jtfPesoActionPerformed
+
+    private void jtfTamanhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfTamanhoActionPerformed
+        // TODO add your handling code here:
+
+        inserirAnimais();
+        
+    }//GEN-LAST:event_jtfTamanhoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -283,11 +373,11 @@ public class CadastrarAnimais extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jtfIdade;
+    private javax.swing.JTextField jtfNome;
+    private javax.swing.JTextField jtfPeso;
+    private javax.swing.JTextField jtfRaca;
+    private javax.swing.JTextField jtfTamanho;
+    private javax.swing.JTextField jtfTipo;
     // End of variables declaration//GEN-END:variables
 }

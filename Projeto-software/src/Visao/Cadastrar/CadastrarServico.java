@@ -5,6 +5,11 @@
  */
 package Visao.Cadastrar;
 
+import DAO.*;
+import Modelo.*;
+import java.sql.Connection;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Usuario
@@ -21,6 +26,45 @@ public class CadastrarServico extends javax.swing.JFrame {
         setLocationRelativeTo(this);
     }
 
+    public void inserirAnimais() {
+        
+        String indicacao = jtfIndicaco.getText();
+        String preco = jtfPreco.getText();
+        String dispo = jtfDisponibilidade.getText();
+        String desconto = jtfDesconto.getText();
+        
+        if (indicacao.equals("") && preco.equals("") && dispo.equals("") && desconto.equals("")) {
+            
+            JOptionPane.showMessageDialog(null, "Nenhum campo pode estar vazio!", "", JOptionPane.WARNING_MESSAGE);
+            
+        } else {
+            
+            Connection con = Conexao.AbrirConexao();
+            ServicoDAO sql = new ServicoDAO(con);
+            Servico a = new Servico();
+           
+            double pre = Double.parseDouble(preco);
+            double des = Double.parseDouble(desconto);
+            
+            a.setIndicacao(indicacao);
+            a.setPreco(pre);
+            a.setDisponibilidade(dispo);
+            a.setDesconto(des);
+
+            sql.Inserir_Servico(a);
+            Conexao.FecharConexao(con);
+            
+            jtfDesconto.setText("");
+            jtfPreco.setText("");
+            jtfDisponibilidade.setText("");
+            jtfIndicaco.setText("");
+                    
+            JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!", "", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+            
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,10 +81,10 @@ public class CadastrarServico extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        jtfIndicaco = new javax.swing.JTextField();
+        jtfDesconto = new javax.swing.JTextField();
+        jtfDisponibilidade = new javax.swing.JTextField();
+        jtfPreco = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -83,9 +127,15 @@ public class CadastrarServico extends javax.swing.JFrame {
 
         jLabel8.setText("Desconto:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jtfIndicaco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jtfIndicacoActionPerformed(evt);
+            }
+        });
+
+        jtfDesconto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfDescontoActionPerformed(evt);
             }
         });
 
@@ -102,12 +152,12 @@ public class CadastrarServico extends javax.swing.JFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField2)
+                    .addComponent(jtfDesconto)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtfIndicaco, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField3))
+                    .addComponent(jtfDisponibilidade, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jtfPreco))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -116,19 +166,19 @@ public class CadastrarServico extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
+                    .addComponent(jtfIndicaco, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addComponent(jTextField3))
+                    .addComponent(jtfPreco))
                 .addGap(22, 22, 22)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6))
+                    .addComponent(jtfDisponibilidade))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -142,6 +192,11 @@ public class CadastrarServico extends javax.swing.JFrame {
         });
 
         jButton2.setText("Cadastrar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -186,14 +241,28 @@ public class CadastrarServico extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jtfIndicacoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfIndicacoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jtfIndicacoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        inserirAnimais();
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jtfDescontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfDescontoActionPerformed
+        // TODO add your handling code here:
+        
+        inserirAnimais();
+        
+    }//GEN-LAST:event_jtfDescontoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -242,9 +311,9 @@ public class CadastrarServico extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jtfDesconto;
+    private javax.swing.JTextField jtfDisponibilidade;
+    private javax.swing.JTextField jtfIndicaco;
+    private javax.swing.JTextField jtfPreco;
     // End of variables declaration//GEN-END:variables
 }

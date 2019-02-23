@@ -110,13 +110,13 @@
                   </Group>
                   <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jTextField2" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jtfDesconto" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="jTextField1" min="-2" pref="350" max="-2" attributes="0"/>
+                          <Component id="jtfIndicaco" min="-2" pref="350" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jTextField6" alignment="1" max="32767" attributes="0"/>
-                      <Component id="jTextField3" max="32767" attributes="0"/>
+                      <Component id="jtfDisponibilidade" alignment="1" max="32767" attributes="0"/>
+                      <Component id="jtfPreco" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -128,22 +128,22 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jLabel4" max="32767" attributes="0"/>
-                      <Component id="jTextField1" pref="40" max="32767" attributes="0"/>
+                      <Component id="jtfIndicaco" pref="40" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jLabel5" pref="40" max="32767" attributes="0"/>
-                      <Component id="jTextField3" max="32767" attributes="0"/>
+                      <Component id="jtfPreco" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel6" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="jTextField6" max="32767" attributes="0"/>
+                      <Component id="jtfDisponibilidade" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel8" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="jTextField2" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="jtfDesconto" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -171,16 +171,19 @@
             <Property name="text" type="java.lang.String" value="Desconto:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="jtfIndicaco">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtfIndicacoActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField2">
+        <Component class="javax.swing.JTextField" name="jtfDesconto">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtfDescontoActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField6">
+        <Component class="javax.swing.JTextField" name="jtfDisponibilidade">
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField3">
+        <Component class="javax.swing.JTextField" name="jtfPreco">
         </Component>
       </SubComponents>
     </Container>
@@ -231,6 +234,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Cadastrar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

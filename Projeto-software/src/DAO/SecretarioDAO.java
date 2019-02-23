@@ -47,4 +47,36 @@ public class SecretarioDAO extends ExecuteSQL {
         
     }
     
+    public String Inserir_Secretario(Secretaria a) {
+
+        try {
+        
+            String sql = "insert into secretaria values(0,?,?,?,?,?,?,?)";
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ps.setString(1, a.getLogin());
+            ps.setString(2, a.getSenha());
+            ps.setString(3, a.getNome());
+            ps.setString(4, a.getEndereco());
+            ps.setString(5, a.getCpf());
+            ps.setString(6, a.getRg());
+            ps.setString(7, a.getTelefone());
+            
+            if (ps.executeUpdate()> 0) {
+                
+                return "Inserido com sucesso!";
+                
+            } else {
+                
+                return "Erro ao inserir!";
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return e.getMessage();
+            
+        }
+        
+    }
+    
 }

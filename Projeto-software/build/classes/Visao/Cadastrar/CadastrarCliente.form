@@ -138,13 +138,13 @@
                           </Group>
                           <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jTextField2" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jtfEmail" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jTextField1" min="-2" pref="350" max="-2" attributes="0"/>
+                                      <Component id="jtfNome" min="-2" pref="350" max="-2" attributes="0"/>
                                       <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="jFormattedTextField1" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="jFormattedTextField2" alignment="0" pref="170" max="32767" attributes="0"/>
+                                          <Component id="jtfCpf" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jtfTelefone" alignment="0" pref="170" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -154,7 +154,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel9" min="-2" pref="70" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jTextField6" max="32767" attributes="0"/>
+                          <Component id="jtfEndereco" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -167,27 +167,27 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jLabel4" max="32767" attributes="0"/>
-                      <Component id="jTextField1" pref="40" max="32767" attributes="0"/>
+                      <Component id="jtfNome" pref="40" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextField2" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="jtfEmail" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="jLabel5" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jFormattedTextField1" pref="40" max="32767" attributes="0"/>
+                      <Component id="jtfCpf" pref="40" max="32767" attributes="0"/>
                       <Component id="jLabel6" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jLabel8" max="32767" attributes="0"/>
-                      <Component id="jFormattedTextField2" pref="40" max="32767" attributes="0"/>
+                      <Component id="jtfTelefone" pref="40" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jLabel9" max="32767" attributes="0"/>
-                      <Component id="jTextField6" pref="40" max="32767" attributes="0"/>
+                      <Component id="jtfEndereco" pref="40" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -220,23 +220,26 @@
             <Property name="text" type="java.lang.String" value="Endere&#xe7;o:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="jtfNome">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtfNomeActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField2">
+        <Component class="javax.swing.JTextField" name="jtfEmail">
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField6">
+        <Component class="javax.swing.JTextField" name="jtfEndereco">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtfEnderecoActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField1">
+        <Component class="javax.swing.JFormattedTextField" name="jtfCpf">
           <Properties>
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
               <Format format="###.###.###-##" subtype="-1" type="5"/>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField2">
+        <Component class="javax.swing.JFormattedTextField" name="jtfTelefone">
           <Properties>
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
               <Format format="(##) 9 ####-####" subtype="-1" type="5"/>
@@ -292,6 +295,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Cadastrar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

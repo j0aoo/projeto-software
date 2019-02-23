@@ -5,7 +5,6 @@ public class Admin {
     private String login;
     private String senha;
     private String senhaExtra; 
-    private int tipo_user;
 
     public int getId() {
         return id;
@@ -37,14 +36,6 @@ public class Admin {
 
     public void setSenhaExtra(String senhaExtra) {
         this.senhaExtra = senhaExtra;
-    }
-
-    public int getTipo_user() {
-        return tipo_user;
-    }
-
-    public void setTipo_user(int tipo_user) {
-        this.tipo_user = tipo_user;
     }
     
 }
