@@ -308,4 +308,112 @@ public class SecretarioDAO extends ExecuteSQL {
         
     }
     
+    public boolean Testar_Secretario(int cod) {
+        
+        boolean Resultado = false;
+        
+        try {
+            
+            String sql = "select * from secretaria where id = '"+ cod +"'";
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Resultado = true;
+                    
+                }
+                
+            }
+            
+        } catch (SQLException ex) {
+        
+            ex.getMessage();
+        
+        }
+        
+        return Resultado;
+        
+    }
+    
+    public List<Secretaria> CapturarSecretaria(int cod){
+        
+        String sql = "select * from secretaria where id = "+ cod +"";
+        List<Secretaria> lista = new ArrayList<>();
+        
+        try {
+
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Secretaria a = new Secretaria();
+                    
+                    a.setId(rs.getInt(1));
+                    a.setLogin(rs.getString(2));
+                    a.setNome(rs.getString(3));
+                    a.setEndereco(rs.getString(4));
+                    a.setCpf(rs.getString(5));
+                    a.setRg(rs.getString(6));
+                    a.setTelefone(rs.getString(7));
+                    
+                    lista.add(a);
+                    
+                }
+                
+                return lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+            
+    }
+    
+    public String Alterar_Secretaria(Secretaria a) {
+        
+        String sql = "update secretaria set login = ? ,nome = ? ,endereco = ?"
+                + " ,cpf = ? ,rg = ? ,telefone = ?  where id = ? ";
+        
+        try {
+            
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ps.setString(1, a.getLogin());
+            ps.setString(2, a.getNome());
+            ps.setString(3, a.getEndereco());
+            ps.setString(4, a.getCpf());
+            ps.setString(5, a.getRg());
+            ps.setString(6, a.getTelefone());
+            ps.setInt(7, a.getId());
+            
+            if (ps.executeUpdate() > 0) {
+                
+                return "Atualizado com sucesso!";
+                
+            } else {
+                
+                return "Erro ao Atualizar!";
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return e.getMessage();
+            
+        }
+        
+    }
+    
 }

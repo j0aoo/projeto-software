@@ -5,6 +5,14 @@
  */
 package Visao.Alterar;
 
+import Modelo.*;
+import DAO.*;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Usuario
@@ -18,6 +26,108 @@ public class AlterarServico extends javax.swing.JFrame {
         initComponents();
     }
 
+    private void InserirDados(int cod){
+        
+        Connection con = Conexao.AbrirConexao();
+        ServicoDAO sql = new ServicoDAO(con);
+        List<Servico> lista = new ArrayList<>();
+        lista = sql.CapturarServico(cod);
+        
+        for (Servico a : lista) {
+            
+            jtfCod.setText("" + a.getId_serv());
+            jtfNome.setText(a.getNome());
+            jtfIndicacao.setText("" + a.getIndicacao());
+            jtfPreco.setText("" + a.getPreco());
+            jtfDisponibilidade.setText(""+a.getDisponibilidade());
+            jtfDesconto.setText(""+a.getDesconto());
+            
+        }
+        
+        Conexao.FecharConexao(con);
+        
+    }
+    
+    public void MostraNosCampos(){
+        
+        String codigo = jtfCodigo.getText();
+        
+        Connection con = Conexao.AbrirConexao();
+        ServicoDAO sql = new ServicoDAO(con);
+        int cod = Integer.parseInt(codigo);
+        
+        if (sql.Testar_Servico(cod) == false) {
+            
+            JOptionPane.showMessageDialog(null, "Codigo não Encontrado no Banco", "Video Locadora", JOptionPane.ERROR_MESSAGE);
+            Conexao.FecharConexao(con);
+            
+        }
+        
+        if (codigo.equals("")) {
+            
+            JOptionPane.showMessageDialog(null, "Digite um Codigo para Atualizar", "Video Locadora", JOptionPane.ERROR_MESSAGE);
+
+        }
+        
+        jtfCod.setText("");
+        jtfNome.setText("");
+        jtfIndicacao.setText("");
+        jtfPreco.setText("");
+        jtfDisponibilidade.setText("");
+        jtfDesconto.setText("");
+        
+        InserirDados(cod);
+        jtfCodigo.setText("");
+        
+    }
+    
+    public void Alterar() {
+        
+        String codigo = jtfCod.getText();
+        String nome = jtfNome.getText();
+        String indicacao = jtfIndicacao.getText();
+        String preco = jtfPreco.getText();
+        String disponibilidade = jtfDisponibilidade.getText();
+        String desconto = jtfDesconto.getText();
+        
+        if (nome.equals("")) {
+            
+            JOptionPane.showMessageDialog(null, "Nenhum campo pode estar vazio", "Video Locadora", JOptionPane.ERROR_MESSAGE);
+            
+        } else {
+            
+            Connection con = Conexao.AbrirConexao();
+            ServicoDAO sql = new ServicoDAO(con);
+            
+            int cod = Integer.parseInt(codigo);
+            double pre = Double.parseDouble(preco);
+            double des = Double.parseDouble(desconto);
+
+            Servico a = new Servico();
+            a.setId_serv(cod);
+            a.setNome(nome);
+            a.setIndicacao(indicacao);
+            a.setPreco(pre);
+            a.setDisponibilidade(disponibilidade);
+            a.setDesconto(des);
+            
+            sql.Alterar_Servico(a);
+            Conexao.FecharConexao(con);
+            
+            jtfCod.setText("");
+            jtfNome.setText("");
+            jtfIndicacao.setText("");
+            jtfPreco.setText("");
+            jtfDisponibilidade.setText("");
+            jtfDesconto.setText("");
+            
+            JOptionPane.showMessageDialog(null, "Cadastro Realizado com Sucesso", "Video Locadora", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+            
+        }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,19 +141,21 @@ public class AlterarServico extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
+        jtfCodigo = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField11 = new javax.swing.JTextField();
-        jTextField12 = new javax.swing.JTextField();
+        jtfIndicacao = new javax.swing.JTextField();
+        jtfDesconto = new javax.swing.JTextField();
+        jtfDisponibilidade = new javax.swing.JTextField();
+        jtfPreco = new javax.swing.JTextField();
+        jtfCod = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
+        jtfNome = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -76,6 +188,12 @@ public class AlterarServico extends javax.swing.JFrame {
 
         jLabel10.setText("Digite o código:");
 
+        jtfCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfCodigoActionPerformed(evt);
+            }
+        });
+
         jButton6.setText("OK");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,7 +209,7 @@ public class AlterarServico extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel10)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton6)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -104,7 +222,7 @@ public class AlterarServico extends javax.swing.JFrame {
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -120,13 +238,21 @@ public class AlterarServico extends javax.swing.JFrame {
 
         jLabel14.setText("Desconto:");
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        jtfIndicacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                jtfIndicacaoActionPerformed(evt);
             }
         });
 
         jLabel15.setText("Codigo:");
+
+        jtfNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfNomeActionPerformed(evt);
+            }
+        });
+
+        jLabel16.setText("Nome:");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -135,6 +261,7 @@ public class AlterarServico extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -142,35 +269,40 @@ public class AlterarServico extends javax.swing.JFrame {
                     .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
-                    .addComponent(jTextField7)
-                    .addComponent(jTextField5))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jtfCod, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfIndicacao)
+                    .addComponent(jtfPreco, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
+                    .addComponent(jtfDisponibilidade)
+                    .addComponent(jtfDesconto)
+                    .addComponent(jtfNome))
+                .addContainerGap(303, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField12))
+                    .addComponent(jtfCod, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfIndicacao, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfDisponibilidade, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -185,6 +317,11 @@ public class AlterarServico extends javax.swing.JFrame {
         });
 
         jButton4.setText("Alterar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -202,7 +339,7 @@ public class AlterarServico extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -237,15 +374,36 @@ public class AlterarServico extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        
+        MostraNosCampos();
+        
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void jtfIndicacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfIndicacaoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_jtfIndicacaoActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jtfNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfNomeActionPerformed
+
+    private void jtfCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCodigoActionPerformed
+        // TODO add your handling code here:
+        
+        MostraNosCampos();
+        
+    }//GEN-LAST:event_jtfCodigoActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        
+        Alterar();
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -293,16 +451,18 @@ public class AlterarServico extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jtfCod;
+    private javax.swing.JTextField jtfCodigo;
+    private javax.swing.JTextField jtfDesconto;
+    private javax.swing.JTextField jtfDisponibilidade;
+    private javax.swing.JTextField jtfIndicacao;
+    private javax.swing.JTextField jtfNome;
+    private javax.swing.JTextField jtfPreco;
     // End of variables declaration//GEN-END:variables
 }

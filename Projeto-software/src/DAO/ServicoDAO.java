@@ -269,4 +269,110 @@ public class ServicoDAO extends ExecuteSQL {
         
     }
     
+    public boolean Testar_Servico(int cod) {
+        
+        boolean Resultado = false;
+        
+        try {
+            
+            String sql = "select * from servicos where id_serv = '"+ cod +"'";
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Resultado = true;
+                    
+                }
+                
+            }
+            
+        } catch (SQLException ex) {
+        
+            ex.getMessage();
+        
+        }
+        
+        return Resultado;
+        
+    }
+    
+    public List<Servico> CapturarServico(int cod){
+        
+        String sql = "select * from servicos where id_serv = "+ cod +"";
+        List<Servico> lista = new ArrayList<>();
+        
+        try {
+
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Servico a = new Servico();
+                    
+                    a.setId_serv(rs.getInt(1));
+                    a.setNome(rs.getString(2));
+                    a.setIndicacao(rs.getString(3));
+                    a.setPreco(rs.getDouble(4));
+                    a.setDisponibilidade(rs.getString(5));
+                    a.setDesconto(rs.getDouble(6));
+                    
+                    lista.add(a);
+                    
+                }
+                
+                return lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+            
+    }
+    
+    public String Alterar_Servico(Servico a) {
+        
+        String sql = "update servicos set nome = ? ,indicacao = ? ,preco = ?"
+                + " ,disponibilidade = ? ,desconto = ? where id_serv = ? ";
+        
+        try {
+            
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ps.setString(1, a.getNome());
+            ps.setString(2, a.getIndicacao());
+            ps.setDouble(3, a.getPreco());
+            ps.setString(4, a.getDisponibilidade());
+            ps.setDouble(5, a.getDesconto());
+            ps.setInt(6, a.getId_serv());
+            
+            if (ps.executeUpdate() > 0) {
+                
+                return "Atualizado com sucesso!";
+                
+            } else {
+                
+                return "Erro ao Atualizar!";
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return e.getMessage();
+            
+        }
+        
+    }
+    
 }

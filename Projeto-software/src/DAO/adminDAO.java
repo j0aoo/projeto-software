@@ -292,4 +292,106 @@ public class adminDAO extends ExecuteSQL {
         
     }
     
+    public boolean Testar_Admin(int cod) {
+        
+        boolean Resultado = false;
+        
+        try {
+            
+            String sql = "select * from admin where id = '"+ cod +"'";
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Resultado = true;
+                    
+                }
+                
+            }
+            
+        } catch (SQLException ex) {
+        
+            ex.getMessage();
+        
+        }
+        
+        return Resultado;
+        
+    }
+    
+    public List<Admin> CapturarAdmin(int cod){
+        
+        String sql = "select * from admin where id = "+ cod +"";
+        List<Admin> lista = new ArrayList<>();
+        
+        try {
+
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Admin a = new Admin();
+                    
+                    a.setId(rs.getInt(1));
+                    a.setLogin(rs.getString(2));
+                    a.setSenha(rs.getString(3));
+                    a.setSenhaExtra(rs.getString(4));
+                    
+                    lista.add(a);
+                    
+                }
+                
+                return lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+            
+    }
+    
+    public String Alterar_Admim(Admin a) {
+        
+        String sql = "update admin set login = ? ,senha = ? ,senhaExtra = ?"
+                + " where id = ? ";
+        
+        try {
+            
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ps.setString(1, a.getLogin());
+            ps.setString(2, a.getSenha());
+            ps.setString(3, a.getSenhaExtra());
+            ps.setDouble(4, a.getId());
+            
+            if (ps.executeUpdate() > 0) {
+                
+                return "Atualizado com sucesso!";
+                
+            } else {
+                
+                return "Erro ao Atualizar!";
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return e.getMessage();
+            
+        }
+        
+    }
+    
 }

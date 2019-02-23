@@ -269,4 +269,110 @@ public class ClienteDAO extends ExecuteSQL {
         
     }
     
+    public boolean Testar_Cliente(int cod) {
+        
+        boolean Resultado = false;
+        
+        try {
+            
+            String sql = "select * from clientes where id_cliente = '"+ cod +"'";
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Resultado = true;
+                    
+                }
+                
+            }
+            
+        } catch (SQLException ex) {
+        
+            ex.getMessage();
+        
+        }
+        
+        return Resultado;
+        
+    }
+    
+    public List<Cliente> CapturarCliente(int cod){
+        
+        String sql = "select * from clientes where id_cliente = '"+ cod +"'";
+        List<Cliente> lista = new ArrayList<>();
+        
+        try {
+
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Cliente a = new Cliente();
+                    
+                    a.setId_cliente(rs.getInt(1));
+                    a.setNome(rs.getString(2));
+                    a.setEmail(rs.getString(3));
+                    a.setCpf(rs.getString(4));
+                    a.setTelefone(rs.getString(5));
+                    a.setEndereco(rs.getString(6));
+                    
+                    lista.add(a);
+                    
+                }
+                
+                return lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+            
+    }
+    
+    public String Alterar_Cliente(Cliente a) {
+        
+        String sql = "update clientes set nome = ? ,email = ? ,cpf = ?"
+                + " ,telefone = ? ,endereco = ? where id_cliente = ? ";
+        
+        try {
+            
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ps.setString(1, a.getNome());
+            ps.setString(2, a.getEmail());
+            ps.setString(3, a.getCpf());
+            ps.setString(4, a.getTelefone());
+            ps.setString(5, a.getEndereco());
+            ps.setInt(6, a.getId_cliente());
+            
+            if (ps.executeUpdate() > 0) {
+                
+                return "Atualizado com sucesso!";
+                
+            } else {
+                
+                return "Erro ao Atualizar!";
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return e.getMessage();
+            
+        }
+        
+    }
+    
 }

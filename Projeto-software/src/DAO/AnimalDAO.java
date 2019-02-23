@@ -272,5 +272,113 @@ public class AnimalDAO extends ExecuteSQL {
         }
         
     }
+
+    public boolean Testar_Animal(int cod) {
+        
+        boolean Resultado = false;
+        
+        try {
+            
+            String sql = "select * from animais where id_animal = '"+ cod +"'";
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Resultado = true;
+                    
+                }
+                
+            }
+            
+        } catch (SQLException ex) {
+        
+            ex.getMessage();
+        
+        }
+        
+        return Resultado;
+        
+    }
+    
+    public List<Animal> CapturarAnimal(int cod){
+        
+        String sql = "select * from animais where id_animal = "+ cod +"";
+        List<Animal> lista = new ArrayList<>();
+        
+        try {
+
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Animal a = new Animal();
+                    
+                    a.setId(rs.getInt(1));
+                    a.setNome(rs.getString(2));
+                    a.setTipo(rs.getString(3));
+                    a.setRaca(rs.getString(4));
+                    a.setTamanho(rs.getDouble(5));
+                    a.setPeso(rs.getDouble(6));
+                    a.setIdade(rs.getInt(7));
+                    
+                    lista.add(a);
+                    
+                }
+                
+                return lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+            
+    }
+    
+    public String Alterar_Animal(Animal a) {
+        
+        String sql = "update animais set nome = ? ,tipo = ? ,raca = ?"
+                + " ,tamanho = ? ,peso = ? ,idade = ?  where id_animal = ? ";
+        
+        try {
+            
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ps.setString(1, a.getNome());
+            ps.setString(2, a.getTipo());
+            ps.setString(3, a.getRaca());
+            ps.setDouble(4, a.getTamanho());
+            ps.setDouble(5, a.getPeso());
+            ps.setInt(6, a.getIdade());
+            ps.setInt(7, a.getId());
+            
+            if (ps.executeUpdate() > 0) {
+                
+                return "Atualizado com sucesso!";
+                
+            } else {
+                
+                return "Erro ao Atualizar!";
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return e.getMessage();
+            
+        }
+        
+    }
     
 }
