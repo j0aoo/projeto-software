@@ -29,7 +29,7 @@ public class Agendamento extends javax.swing.JFrame {
         setResizable(false);
         setLocationRelativeTo(this);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        AtualizaCombo();
+        AtualizaComboCompra();
         AtualizaComboServ();
         AtualizaComboAnimal();
         AtualizaComboCliente();
@@ -38,7 +38,7 @@ public class Agendamento extends javax.swing.JFrame {
         AtualizaTable2();
     }
     
-    private void AtualizaCombo(){
+    private void AtualizaComboCompra(){
         Connection con = Conexao.AbrirConexao();
         CompraDAO sql = new CompraDAO(con);
         List<Compra> lista = new ArrayList<>();
@@ -51,12 +51,12 @@ public class Agendamento extends javax.swing.JFrame {
         Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
     }
     
-    public void SelecionarCombo(){
+    public void SelecionarComboCompra(){
         
         Connection con = Conexao.AbrirConexao();
         CompraDAO sql = new CompraDAO(con);
         List<Compra> lista = new ArrayList<>();
-        String nome = jcbNome.getSelectedItem().toString();
+        String nome = jcbS.getSelectedItem().toString();
         
         lista = sql.ConsultaCodigoCompra(nome);
         
@@ -909,6 +909,11 @@ public class Agendamento extends javax.swing.JFrame {
 
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jButton3.setText("EXCLUIR");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
         jPanel17.setLayout(jPanel17Layout);
@@ -955,6 +960,12 @@ public class Agendamento extends javax.swing.JFrame {
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
+
+        jcbS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbSActionPerformed(evt);
+            }
+        });
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel14.setText("Agendados");
@@ -1099,6 +1110,47 @@ public class Agendamento extends javax.swing.JFrame {
         PesquisaHoje();
         
     }//GEN-LAST:event_jToggleButton4ActionPerformed
+
+    private void jcbSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSActionPerformed
+        // TODO add your handling code here:
+        
+        SelecionarComboCompra();
+        
+    }//GEN-LAST:event_jcbSActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        
+        String codigo = jtfCodC.getText();
+        String nome = jcbS.getSelectedItem().toString();
+        
+        Connection con = Conexao.AbrirConexao();
+        CompraDAO sql = new CompraDAO(con);
+        Compra a = new Compra();
+        
+        if (nome.equals("")) {
+            
+            JOptionPane.showMessageDialog(null, "Nenhum nome selecionado", "", JOptionPane.WARNING_MESSAGE);
+            
+        } else {
+            
+            int b = JOptionPane.showConfirmDialog(null,"Deseja realmente continuar?", "",
+            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            
+            if (b == 0) {
+                
+                int cod = Integer.parseInt(codigo);
+                a.setLista_serv(nome);
+                a.setId_compra(cod);
+                sql.Excluir_Compra(a);
+                Conexao.FecharConexao(con);
+                dispose();
+                
+            }
+            
+        }
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
