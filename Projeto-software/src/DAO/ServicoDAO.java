@@ -143,4 +143,130 @@ public class ServicoDAO extends ExecuteSQL {
         
     }
     
+    public List<Servico> ListarSevico() {
+    
+        String sql = "select id_serv,nome,indicacao,preco,disponibilidade,desconto from servicos";
+        List<Servico> Lista = new ArrayList<>();
+           
+        try {
+
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Servico a = new Servico();
+                    a.setId_serv(rs.getInt(1));
+                    a.setNome(rs.getString(2));
+                    a.setIndicacao(rs.getString(3));
+                    a.setPreco(rs.getDouble(4));
+                    a.setDisponibilidade(rs.getString(5));
+                    a.setDesconto(rs.getDouble(6));
+               
+                    Lista.add(a);
+                    
+                }
+                
+                return Lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+        
+    }
+    
+    public List<Servico> Pesquisar_Nome_Servico(String nome) {
+    
+        String sql = "select id_serv,nome,indicacao,preco,disponibilidade,desconto from servicos where nome like '%"+ nome +"%'";
+        List<Servico> Lista = new ArrayList<>();
+           
+        try {
+
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Servico a = new Servico();
+                    a.setId_serv(rs.getInt(1));
+                    a.setNome(rs.getString(2));
+                    a.setIndicacao(rs.getString(3));
+                    a.setPreco(rs.getDouble(4));
+                    a.setDisponibilidade(rs.getString(5));
+                    a.setDesconto(rs.getDouble(6));
+               
+                    Lista.add(a);
+                    
+                }
+                
+                return Lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+        
+    }
+    
+    public List<Servico> Pesquisar_Cod_Servico(int cod) {
+    
+        String sql = "select id_serv,nome,indicacao,preco,disponibilidade,desconto from servicos where id_serv = '"+ cod +"'";
+        List<Servico> Lista = new ArrayList<>();
+           
+        try {
+
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Servico a = new Servico();
+                    a.setId_serv(rs.getInt(1));
+                    a.setNome(rs.getString(2));
+                    a.setIndicacao(rs.getString(3));
+                    a.setPreco(rs.getDouble(4));
+                    a.setDisponibilidade(rs.getString(5));
+                    a.setDesconto(rs.getDouble(6));
+               
+                    Lista.add(a);
+                    
+                }
+                
+                return Lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+        
+    }
+    
 }

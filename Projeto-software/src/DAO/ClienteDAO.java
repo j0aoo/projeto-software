@@ -143,4 +143,130 @@ public class ClienteDAO extends ExecuteSQL {
         
     }
     
+    public List<Cliente> ListarCliente() {
+    
+        String sql = "select id_cliente,nome,email,cpf,telefone,endereco from clientes";
+        List<Cliente> Lista = new ArrayList<>();
+           
+        try {
+
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Cliente a = new Cliente();
+                    a.setId_cliente(rs.getInt(1));
+                    a.setNome(rs.getString(2));
+                    a.setEmail(rs.getString(3));
+                    a.setCpf(rs.getString(4));
+                    a.setTelefone(rs.getString(5));
+                    a.setEndereco(rs.getString(6));
+               
+                    Lista.add(a);
+                    
+                }
+                
+                return Lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+        
+    }
+    
+    public List<Cliente> Pesquisar_Nome_Cliente(String nome) {
+    
+        String sql = "select id_cliente,nome,email,cpf,telefone,endereco from clientes where nome like '%"+ nome +"%'";
+        List<Cliente> Lista = new ArrayList<>();
+           
+        try {
+
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Cliente a = new Cliente();
+                    a.setId_cliente(rs.getInt(1));
+                    a.setNome(rs.getString(2));
+                    a.setEmail(rs.getString(3));
+                    a.setCpf(rs.getString(4));
+                    a.setTelefone(rs.getString(5));
+                    a.setEndereco(rs.getString(6));
+               
+                    Lista.add(a);
+                    
+                }
+                
+                return Lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+        
+    }
+    
+    public List<Cliente> Pesquisar_Cod_Cliente(int cod) {
+    
+        String sql = "select id_cliente,nome,email,cpf,telefone,endereco from clientes where id_cliente = '"+ cod +"'";
+        List<Cliente> Lista = new ArrayList<>();
+           
+        try {
+
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Cliente a = new Cliente();
+                    a.setId_cliente(rs.getInt(1));
+                    a.setNome(rs.getString(2));
+                    a.setEmail(rs.getString(3));
+                    a.setCpf(rs.getString(4));
+                    a.setTelefone(rs.getString(5));
+                    a.setEndereco(rs.getString(6));
+                    
+                    Lista.add(a);
+                    
+                }
+                
+                return Lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+        
+    }
+    
 }

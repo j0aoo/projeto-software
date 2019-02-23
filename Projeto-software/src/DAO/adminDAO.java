@@ -172,4 +172,124 @@ public class adminDAO extends ExecuteSQL {
         
     }
     
+    public List<Admin> ListarAdmin() {
+    
+        String sql = "select id,login,senha,senhaExtra from admin";
+        List<Admin> Lista = new ArrayList<>();
+           
+        try {
+
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Admin a = new Admin();
+                    a.setId(rs.getInt(1));
+                    a.setLogin(rs.getString(2));
+                    a.setSenha(rs.getString(3));
+                    a.setSenhaExtra(rs.getString(4));
+               
+                    Lista.add(a);
+                    
+                }
+                
+                return Lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+        
+    }
+    
+    public List<Admin> Pesquisar_Nome_Admin(String nome) {
+    
+        String sql = "select id,login,senha,senhaExtra from admin where login like '%"+ nome +"'%";
+        List<Admin> Lista = new ArrayList<>();
+           
+        try {
+
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Admin a = new Admin();
+                    a.setId(rs.getInt(1));
+                    a.setLogin(rs.getString(2));
+                    a.setSenha(rs.getString(3));
+                    a.setSenhaExtra(rs.getString(4));
+               
+                    Lista.add(a);
+                    
+                }
+                
+                return Lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+        
+    }
+    
+    public List<Admin> Pesquisar_Nome_Cod(int cod) {
+    
+        String sql = "select id,login,senha,senhaExtra from admin where id = '"+ cod +"'";
+        List<Admin> Lista = new ArrayList<>();
+           
+        try {
+
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Admin a = new Admin();
+                    a.setId(rs.getInt(1));
+                    a.setLogin(rs.getString(2));
+                    a.setSenha(rs.getString(3));
+                    a.setSenhaExtra(rs.getString(4));
+               
+                    Lista.add(a);
+                    
+                }
+                
+                return Lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+        
+    }
+    
 }

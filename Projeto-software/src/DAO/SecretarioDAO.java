@@ -179,4 +179,133 @@ public class SecretarioDAO extends ExecuteSQL {
         
     }
     
+    public List<Secretaria> ListarSecretaria() {
+    
+        String sql = "select id,login,nome,endereco,cpf,rg,telefone from secretaria";
+        List<Secretaria> Lista = new ArrayList<>();
+           
+        try {
+
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Secretaria a = new Secretaria();
+                    a.setId(rs.getInt(1));
+                    a.setLogin(rs.getString(2));
+                    a.setNome(rs.getString(3));
+                    a.setEndereco(rs.getString(4));
+                    a.setCpf(rs.getString(5));
+                    a.setRg(rs.getString(6));
+                    a.setTelefone(rs.getString(7));
+               
+                    Lista.add(a);
+                    
+                }
+                
+                return Lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+        
+    }
+    
+    public List<Secretaria> Pesquisar_Nome_Secretaria(String nome) {
+    
+        String sql = "select id,login,nome,endereco,cpf,rg,telefone from secretaria where nome like '%"+ nome +"%'";
+        List<Secretaria> Lista = new ArrayList<>();
+           
+        try {
+
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Secretaria a = new Secretaria();
+                    a.setId(rs.getInt(1));
+                    a.setLogin(rs.getString(2));
+                    a.setNome(rs.getString(3));
+                    a.setEndereco(rs.getString(4));
+                    a.setCpf(rs.getString(5));
+                    a.setRg(rs.getString(6));
+                    a.setTelefone(rs.getString(7));
+               
+                    Lista.add(a);
+                    
+                }
+                
+                return Lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+        
+    }
+    
+    public List<Secretaria> Pesquisar_Cod_Secretaria(int cod) {
+    
+        String sql = "select id,login,nome,endereco,cpf,rg,telefone from secretaria where id = '"+ cod +"'";
+        List<Secretaria> Lista = new ArrayList<>();
+           
+        try {
+
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Secretaria a = new Secretaria();
+                    a.setId(rs.getInt(1));
+                    a.setLogin(rs.getString(2));
+                    a.setNome(rs.getString(3));
+                    a.setEndereco(rs.getString(4));
+                    a.setCpf(rs.getString(5));
+                    a.setRg(rs.getString(6));
+                    a.setTelefone(rs.getString(7));
+               
+                    Lista.add(a);
+                    
+                }
+                
+                return Lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+        
+    }
+    
 }
