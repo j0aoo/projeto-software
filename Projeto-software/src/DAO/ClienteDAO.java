@@ -143,6 +143,41 @@ public class ClienteDAO extends ExecuteSQL {
         
     }
     
+    public List<Cliente> ConsultaCpfCliente(String nome){
+    
+        String sql = "SELECT cpf FROM clientes WHERE nome = '"+ nome +"'";
+        List<Cliente> lista = new ArrayList<>();
+        
+        try {
+        
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+            
+                while (rs.next()) {
+                
+                    Cliente a = new Cliente();
+                    a.setCpf(rs.getString(1));
+                    lista.add(a);
+                
+                }
+                
+                return lista;
+            
+            } else {
+            
+                return null;
+            
+            }
+        } catch (Exception e) {
+                
+            return null;
+        
+        }
+        
+    }
+    
     public List<Cliente> ListarCliente() {
     
         String sql = "select id_cliente,nome,email,cpf,telefone,endereco from clientes";
