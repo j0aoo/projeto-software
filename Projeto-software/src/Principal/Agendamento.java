@@ -29,12 +29,46 @@ public class Agendamento extends javax.swing.JFrame {
         setResizable(false);
         setLocationRelativeTo(this);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        AtualizaCombo();
         AtualizaComboServ();
         AtualizaComboAnimal();
         AtualizaComboCliente();
         AtualizaDate();
         AtualizaTable();
         AtualizaTable2();
+    }
+    
+    private void AtualizaCombo(){
+        Connection con = Conexao.AbrirConexao();
+        CompraDAO sql = new CompraDAO(con);
+        List<Compra> lista = new ArrayList<>();
+        lista = sql.ListarComboCompra();
+        jcbS.addItem(" - ");
+        
+        for (Compra b : lista) {
+            jcbS.addItem(b.getLista_serv());
+        }
+        Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
+    }
+    
+    public void SelecionarCombo(){
+        
+        Connection con = Conexao.AbrirConexao();
+        CompraDAO sql = new CompraDAO(con);
+        List<Compra> lista = new ArrayList<>();
+        String nome = jcbNome.getSelectedItem().toString();
+        
+        lista = sql.ConsultaCodigoCompra(nome);
+        
+        for (Compra b : lista) {
+            
+            int a = b.getId_compra();
+            jtfCodC.setText(""+a);
+                
+        }
+        
+        Conexao.FecharConexao(con);
+        
     }
     
     public void AtualizaTable() {
@@ -79,7 +113,7 @@ public class Agendamento extends javax.swing.JFrame {
         Connection con = Conexao.AbrirConexao();
         CompraDAO bd = new CompraDAO(con);
         List<Compra> lista = new ArrayList<>();
-        lista = bd.ListarCompra();
+        lista = bd.ListaDelete();
         
         DefaultTableModel tbm = (DefaultTableModel) jTable2.getModel();
         
@@ -97,7 +131,7 @@ public class Agendamento extends javax.swing.JFrame {
             jTable2.setValueAt(tab.getCpf_cliente(), i, 1);
             jTable2.setValueAt(tab.getId_animal(), i, 2);
             jTable2.setValueAt(tab.getLista_serv(), i, 3);
-            jTable2.setValueAt(tab.getTotal(), i, 4);
+            jTable2.setValueAt(tab.getDataAgend(), i, 4);
 
             i++;
             
@@ -303,7 +337,7 @@ public class Agendamento extends javax.swing.JFrame {
         
         String cpf = jtfCpf.getText();
         String codAnimal = jtfAnimal.getText();
-        String serv = jtfServico.getText();
+        String serv = jcbServico.getSelectedItem().toString();
         String desconto = jtfDesconto.getText();
         String total = jtfTotal.getText();
         String pagamento = jcbPagamento.getSelectedItem().toString();
@@ -412,9 +446,10 @@ public class Agendamento extends javax.swing.JFrame {
         jPanel15 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jcbS = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
+        jtfCodC = new javax.swing.JTextField();
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Cliente:");
@@ -897,11 +932,11 @@ public class Agendamento extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "CPF - Cliente", "ID - Animal", "Servico"
+                "ID", "CPF - Cliente", "ID - Animal", "Servico", "Agendado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -914,9 +949,7 @@ public class Agendamento extends javax.swing.JFrame {
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
-                .addGap(0, 25, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -934,18 +967,21 @@ public class Agendamento extends javax.swing.JFrame {
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel17, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
+            .addGroup(jPanel13Layout.createSequentialGroup()
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel14)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                .addComponent(jcbS, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jtfCodC, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addContainerGap(145, Short.MAX_VALUE)
                         .addComponent(jLabel15)
-                        .addGap(130, 130, 130)))
+                        .addGap(117, 117, 117)))
                 .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel13Layout.setVerticalGroup(
@@ -961,7 +997,9 @@ public class Agendamento extends javax.swing.JFrame {
                         .addGap(58, 58, 58)
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jcbS, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtfCodC, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(42, 42, 42)
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)))
@@ -979,7 +1017,7 @@ public class Agendamento extends javax.swing.JFrame {
             .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("tab3", jPanel12);
+        jTabbedPane1.addTab("Deletar", jPanel12);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1102,7 +1140,6 @@ public class Agendamento extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1147,8 +1184,10 @@ public class Agendamento extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jcbAnimal;
     private javax.swing.JComboBox<String> jcbNome;
     private javax.swing.JComboBox<String> jcbPagamento;
+    private javax.swing.JComboBox<String> jcbS;
     private javax.swing.JComboBox<String> jcbServico;
     private javax.swing.JTextField jtfAnimal;
+    private javax.swing.JTextField jtfCodC;
     private javax.swing.JTextField jtfCpf;
     private javax.swing.JFormattedTextField jtfData;
     private javax.swing.JTextField jtfDesconto;

@@ -94,6 +94,48 @@ public class CompraDAO extends ExecuteSQL {
         
     }
     
+    public List<Compra> ListaDelete() {
+    
+        String sql = "select id_compra,cpf_cliente,id_animal,listaServ,dataAgend from compra";
+        List<Compra> Lista = new ArrayList<>();
+           
+        try {
+
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Compra a = new Compra();
+                    
+                    a.setId_compra(rs.getInt(1));
+                    a.setCpf_cliente(rs.getString(2));
+                    a.setId_animal(rs.getInt(3));
+                    a.setLista_serv(rs.getString(4));
+                    a.setDataAgend(rs.getString(5));
+                    
+                    Lista.add(a);
+                    
+                }
+                
+                return Lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+        
+    }
+    
     public List<Compra> ListarCompraHoje() {
  
         Date date = new Date();
@@ -234,6 +276,103 @@ public class CompraDAO extends ExecuteSQL {
             
             return null;
             
+        }
+        
+    }
+    
+    public String Excluir_Compra(Compra a){
+  
+        String sql = "DELETE FROM compra WHERE id_compra = ? AND listaServ = ?";
+        
+        try {
+        
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ps.setInt(1, a.getId_compra());
+            ps.setString(2, a.getLista_serv());
+            
+            if (ps.executeUpdate() > 0) {
+            
+                return "Excluído com sucesso!";
+            
+            } else {
+            
+                return "Erro ao excluir!";
+            
+            }
+        } catch (Exception e) {
+        
+            return e.getMessage();
+        
+        }
+        
+    }
+    
+    public List<Compra> ListarComboCompra(){
+    
+        String sql = "SELECT listaServ FROM compra ORDER BY listaServ";
+        List<Compra> lista = new ArrayList<>();
+        
+        try {
+        
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+            
+                while (rs.next()) {
+                
+                    Compra a = new Compra();
+                    a.setLista_serv(rs.getString(1));
+                    lista.add(a);
+                    
+                }
+                
+                return lista;
+            
+            } else {
+            
+                return null;
+            
+            }
+        } catch (Exception e) {
+        
+            return null;
+        
+        }
+        
+    }
+    
+    public List<Compra> ConsultaCodigoCompra(String serv){
+    
+        String sql = "SELECT id_compra FROM compra WHERE listaServ = '"+ serv +"'";
+        List<Compra> lista = new ArrayList<>();
+        
+        try {
+        
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+            
+                while (rs.next()) {
+                
+                    Compra a = new Compra();
+                    a.setId_compra(rs.getInt(1));
+                    lista.add(a);
+                
+                }
+                
+                return lista;
+            
+            } else {
+            
+                return null;
+            
+            }
+        } catch (Exception e) {
+                
+            return null;
+        
         }
         
     }
