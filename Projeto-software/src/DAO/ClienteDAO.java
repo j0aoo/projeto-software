@@ -3,7 +3,10 @@ package DAO;
 import Modelo.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClienteDAO extends ExecuteSQL {
     
@@ -38,6 +41,104 @@ public class ClienteDAO extends ExecuteSQL {
             
             return e.getMessage();
             
+        }
+        
+    }
+    
+    public String Excluir_Cliente(Cliente a){
+  
+        String sql = "DELETE FROM clientes WHERE id_cliente = ? AND nome = ?";
+        
+        try {
+        
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ps.setInt(1, a.getId_cliente());
+            ps.setString(2, a.getNome());
+            
+            if (ps.executeUpdate() > 0) {
+            
+                return "Excluído com sucesso!";
+            
+            } else {
+            
+                return "Erro ao excluir!";
+            
+            }
+        } catch (Exception e) {
+        
+            return e.getMessage();
+        
+        }
+        
+    }
+     
+     
+    public List<Cliente> ListarComboCliente(){
+    
+        String sql = "SELECT nome FROM clientes ORDER BY nome";
+        List<Cliente> lista = new ArrayList<>();
+        
+        try {
+        
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+            
+                while (rs.next()) {
+                
+                    Cliente a = new Cliente();
+                    a.setNome(rs.getString(1));
+                    lista.add(a);
+                    
+                }
+                
+                return lista;
+            
+            } else {
+            
+                return null;
+            
+            }
+        } catch (Exception e) {
+        
+            return null;
+        
+        }
+        
+    }
+    
+    public List<Cliente> ConsultaCodigoCliente(String nome){
+    
+        String sql = "SELECT id_cliente FROM clientes WHERE nome = '"+ nome +"'";
+        List<Cliente> lista = new ArrayList<>();
+        
+        try {
+        
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+            
+                while (rs.next()) {
+                
+                    Cliente a = new Cliente();
+                    a.setId_cliente(rs.getInt(1));
+                    lista.add(a);
+                
+                }
+                
+                return lista;
+            
+            } else {
+            
+                return null;
+            
+            }
+        } catch (Exception e) {
+                
+            return null;
+        
         }
         
     }

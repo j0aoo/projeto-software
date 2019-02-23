@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import Modelo.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SecretarioDAO extends ExecuteSQL {
     
@@ -75,6 +77,104 @@ public class SecretarioDAO extends ExecuteSQL {
             
             return e.getMessage();
             
+        }
+        
+    }
+    
+    public String Excluir_Secretario(Secretaria a){
+  
+        String sql = "DELETE FROM secretaria WHERE id = ? AND nome = ?";
+        
+        try {
+        
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ps.setInt(1, a.getId());
+            ps.setString(2, a.getNome());
+            
+            if (ps.executeUpdate() > 0) {
+            
+                return "Excluído com sucesso!";
+            
+            } else {
+            
+                return "Erro ao excluir!";
+            
+            }
+        } catch (Exception e) {
+        
+            return e.getMessage();
+        
+        }
+        
+    }
+     
+     
+    public List<Secretaria> ListarComboSecretaria(){
+    
+        String sql = "SELECT nome FROM secretaria ORDER BY nome";
+        List<Secretaria> lista = new ArrayList<>();
+        
+        try {
+        
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+            
+                while (rs.next()) {
+                
+                    Secretaria a = new Secretaria();
+                    a.setNome(rs.getString(1));
+                    lista.add(a);
+                    
+                }
+                
+                return lista;
+            
+            } else {
+            
+                return null;
+            
+            }
+        } catch (Exception e) {
+        
+            return null;
+        
+        }
+        
+    }
+    
+    public List<Secretaria> ConsultaCodigoSecretaria(String nome){
+    
+        String sql = "SELECT id FROM secretaria WHERE nome = '"+ nome +"'";
+        List<Secretaria> lista = new ArrayList<>();
+        
+        try {
+        
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+            
+                while (rs.next()) {
+                
+                    Secretaria a = new Secretaria();
+                    a.setId(rs.getInt(1));
+                    lista.add(a);
+                
+                }
+                
+                return lista;
+            
+            } else {
+            
+                return null;
+            
+            }
+        } catch (Exception e) {
+                
+            return null;
+        
         }
         
     }

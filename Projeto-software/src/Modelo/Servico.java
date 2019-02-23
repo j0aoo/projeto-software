@@ -3,6 +3,7 @@ package Modelo;
 public class Servico {
 
     private int id_serv;
+    private String nome;
     private String indicacao;
     private double preco;
     private String disponibilidade;
@@ -14,6 +15,14 @@ public class Servico {
 
     public void setId_serv(int id_serv) {
         this.id_serv = id_serv;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getIndicacao() {

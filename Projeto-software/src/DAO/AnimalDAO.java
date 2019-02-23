@@ -46,7 +46,7 @@ public class AnimalDAO extends ExecuteSQL {
         
     }
     
-     public String Excluir_Amimal(Animal a){
+    public String Excluir_Amimal(Animal a){
   
         String sql = "DELETE FROM animais WHERE id_animal = ? AND nome = ?";
         

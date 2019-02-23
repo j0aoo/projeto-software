@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import Modelo.*;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ServicoDAO extends ExecuteSQL {
     
@@ -15,13 +18,14 @@ public class ServicoDAO extends ExecuteSQL {
 
         try {
         
-            String sql = "insert into servicos values(0,?,?,?,?)";
+            String sql = "insert into servicos values(0,?,?,?,?,?)";
             PreparedStatement ps = getcon().prepareStatement(sql);
-            
-            ps.setString(1, a.getIndicacao());
-            ps.setDouble(2, a.getPreco());
-            ps.setString(3, a.getDisponibilidade());
-            ps.setDouble(4, a.getDesconto());
+           
+            ps.setString(1, a.getNome());
+            ps.setString(2, a.getIndicacao());
+            ps.setDouble(3, a.getPreco());
+            ps.setString(4, a.getDisponibilidade());
+            ps.setDouble(5, a.getDesconto());
 
             if (ps.executeUpdate()> 0) {
                 
@@ -37,6 +41,104 @@ public class ServicoDAO extends ExecuteSQL {
             
             return e.getMessage();
             
+        }
+        
+    }
+    
+    public String Excluir_Servico(Servico a){
+  
+        String sql = "DELETE FROM servicos WHERE id_serv = ? AND nome = ?";
+        
+        try {
+        
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ps.setInt(1, a.getId_serv());
+            ps.setString(2, a.getNome());
+            
+            if (ps.executeUpdate() > 0) {
+            
+                return "Excluído com sucesso!";
+            
+            } else {
+            
+                return "Erro ao excluir!";
+            
+            }
+        } catch (Exception e) {
+        
+            return e.getMessage();
+        
+        }
+        
+    }
+     
+     
+    public List<Servico> ListarComboServico(){
+    
+        String sql = "SELECT nome FROM servicos ORDER BY nome";
+        List<Servico> lista = new ArrayList<>();
+        
+        try {
+        
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+            
+                while (rs.next()) {
+                
+                    Servico a = new Servico();
+                    a.setNome(rs.getString(1));
+                    lista.add(a);
+                    
+                }
+                
+                return lista;
+            
+            } else {
+            
+                return null;
+            
+            }
+        } catch (Exception e) {
+        
+            return null;
+        
+        }
+        
+    }
+    
+    public List<Servico> ConsultaCodigoServico(String nome){
+    
+        String sql = "SELECT id_serv FROM servicos WHERE nome = '"+ nome +"'";
+        List<Servico> lista = new ArrayList<>();
+        
+        try {
+        
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+            
+                while (rs.next()) {
+                
+                    Servico a = new Servico();
+                    a.setId_serv(rs.getInt(1));
+                    lista.add(a);
+                
+                }
+                
+                return lista;
+            
+            } else {
+            
+                return null;
+            
+            }
+        } catch (Exception e) {
+                
+            return null;
+        
         }
         
     }

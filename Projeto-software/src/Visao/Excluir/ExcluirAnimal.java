@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import Modelo.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -38,6 +39,26 @@ public class ExcluirAnimal extends javax.swing.JFrame {
             jcbNome.addItem(b.getNome());
         }
         Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
+    }
+    
+    public void SelecionarCombo(){
+        
+        Connection con = Conexao.AbrirConexao();
+        AnimalDAO sql = new AnimalDAO(con);
+        List<Animal> lista = new ArrayList<>();
+        String nome = jcbNome.getSelectedItem().toString();
+        
+        lista = sql.ConsultaCodigoAnimal(nome);
+        
+        for (Animal b : lista) {
+            
+            int a = b.getId();
+            jtfNome.setText(""+a);
+                
+        }
+        
+        Conexao.FecharConexao(con);
+        
     }
     
     /**
@@ -138,6 +159,11 @@ public class ExcluirAnimal extends javax.swing.JFrame {
         });
 
         jButton2.setText("Excluir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -188,7 +214,44 @@ public class ExcluirAnimal extends javax.swing.JFrame {
 
     private void jcbNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbNomeActionPerformed
         // TODO add your handling code here:
+        
+        SelecionarCombo();
+        
     }//GEN-LAST:event_jcbNomeActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+
+        String codigo = jtfNome.getText();
+        String nome = jcbNome.getSelectedItem().toString();
+        
+        Connection con = Conexao.AbrirConexao();
+        AnimalDAO sql = new AnimalDAO(con);
+        Animal a = new Animal();
+        
+        if (nome.equals("")) {
+            
+            JOptionPane.showMessageDialog(null, "Nenhum nome selecionado", "", JOptionPane.WARNING_MESSAGE);
+            
+        } else {
+            
+            int b = JOptionPane.showConfirmDialog(null,"Deseja realmente excluir "+ nome +" | "+ codigo +"?", "",
+            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            
+            if (b == 0) {
+                
+                int cod = Integer.parseInt(codigo);
+                a.setNome(nome);
+                a.setId(cod);
+                sql.Excluir_Amimal(a);
+                Conexao.FecharConexao(con);
+                dispose();
+                
+            }
+            
+        }
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
