@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 23-Fev-2019 às 11:17
+-- Generation Time: 23-Fev-2019 às 17:46
 -- Versão do servidor: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -63,7 +63,7 @@ CREATE TABLE `animais` (
 --
 
 INSERT INTO `animais` (`id_animal`, `nome`, `tipo`, `raca`, `tamanho`, `peso`, `idade`) VALUES
-(1, 'rex', 'rex', 'rex', 12, 12, 12);
+(2, 'nome', 'teste', 'teste', 12, 23, 12);
 
 -- --------------------------------------------------------
 
@@ -85,7 +85,7 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id_cliente`, `nome`, `email`, `cpf`, `telefone`, `endereco`) VALUES
-(1, 'teste', 'teste', '111.111.111-11', '(11) 9 1111-1111', 'tste');
+(2, 'nome', 'teste', '111.111.111-11', '(11) 9 1111-1111', 'teste');
 
 -- --------------------------------------------------------
 
@@ -125,8 +125,7 @@ CREATE TABLE `secretaria` (
 --
 
 INSERT INTO `secretaria` (`id`, `login`, `senha`, `nome`, `endereco`, `cpf`, `rg`, `telefone`) VALUES
-(1, 'joao', '123', 'joao', 'bla', '11111', '11111', '11111'),
-(2, 'teste', '123', 'a', 'a', '111.111.111-11', '111.111.111-11', '(11) 9 1111-1111');
+(1, 'joao', '123', 'joao', 'bla', '11111', '11111', '11111');
 
 -- --------------------------------------------------------
 
@@ -136,6 +135,7 @@ INSERT INTO `secretaria` (`id`, `login`, `senha`, `nome`, `endereco`, `cpf`, `rg
 
 CREATE TABLE `servicos` (
   `id_serv` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
   `indicacao` varchar(30) NOT NULL,
   `preco` double NOT NULL,
   `disponibilidade` varchar(50) DEFAULT NULL,
@@ -146,8 +146,8 @@ CREATE TABLE `servicos` (
 -- Extraindo dados da tabela `servicos`
 --
 
-INSERT INTO `servicos` (`id_serv`, `indicacao`, `preco`, `disponibilidade`, `desconto`) VALUES
-(1, 'gatos', 12, '12', 23);
+INSERT INTO `servicos` (`id_serv`, `nome`, `indicacao`, `preco`, `disponibilidade`, `desconto`) VALUES
+(1, 'nome', 'teste', 12, 'teste\'', 12);
 
 --
 -- Indexes for dumped tables
@@ -198,19 +198,19 @@ ALTER TABLE `servicos`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `animais`
 --
 ALTER TABLE `animais`
-  MODIFY `id_animal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_animal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `compra`
