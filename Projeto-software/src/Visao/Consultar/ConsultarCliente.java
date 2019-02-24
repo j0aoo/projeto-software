@@ -23,8 +23,9 @@ public class ConsultarCliente extends javax.swing.JFrame {
      */
     public ConsultarCliente() {
         initComponents();
-        setLocationRelativeTo(this);
         setResizable(false);
+        setLocationRelativeTo(this);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         AtualizaTable();
     }
 

@@ -23,8 +23,9 @@ public class Excluiradmin extends javax.swing.JFrame {
      */
     public Excluiradmin() {
         initComponents();
-        setLocationRelativeTo(this);
         setResizable(false);
+        setLocationRelativeTo(this);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         AtualizaCombo();
     }
 

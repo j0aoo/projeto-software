@@ -23,8 +23,9 @@ public class ConsultarAdmin extends javax.swing.JFrame {
      */
     public ConsultarAdmin() {
         initComponents();
-        setLocationRelativeTo(this);
         setResizable(false);
+        setLocationRelativeTo(this);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         AtualizaTable();
     }
 

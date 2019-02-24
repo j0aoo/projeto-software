@@ -23,8 +23,9 @@ public class ExcluirServico extends javax.swing.JFrame {
      */
     public ExcluirServico() {
         initComponents();
-        setLocationRelativeTo(this);
         setResizable(false);
+        setLocationRelativeTo(this);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         AtualizaCombo();
     }
 

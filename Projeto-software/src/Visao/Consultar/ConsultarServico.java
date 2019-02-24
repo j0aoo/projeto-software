@@ -10,6 +10,7 @@ import Modelo.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,8 +24,9 @@ public class ConsultarServico extends javax.swing.JFrame {
      */
     public ConsultarServico() {
         initComponents();
-        setLocationRelativeTo(this);
         setResizable(false);
+        setLocationRelativeTo(this);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         AtualizaTable();
     }
 

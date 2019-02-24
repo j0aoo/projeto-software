@@ -23,8 +23,9 @@ public class ConsultarSecretaria extends javax.swing.JFrame {
      */
     public ConsultarSecretaria() {
         initComponents();
-        setLocationRelativeTo(this);
         setResizable(false);
+        setLocationRelativeTo(this);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         AtualizaTable();
     }
 
