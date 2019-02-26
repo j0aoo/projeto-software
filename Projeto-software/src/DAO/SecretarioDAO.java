@@ -314,7 +314,7 @@ public class SecretarioDAO extends ExecuteSQL {
         
         try {
             
-            String sql = "select * from secretaria where id = '"+ cod +"'";
+            String sql = "select * from secretaria where id = "+ cod +"";
             PreparedStatement ps = getcon().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             
@@ -356,11 +356,11 @@ public class SecretarioDAO extends ExecuteSQL {
                     
                     a.setId(rs.getInt(1));
                     a.setLogin(rs.getString(2));
-                    a.setNome(rs.getString(3));
-                    a.setEndereco(rs.getString(4));
-                    a.setCpf(rs.getString(5));
-                    a.setRg(rs.getString(6));
-                    a.setTelefone(rs.getString(7));
+                    a.setNome(rs.getString(4));
+                    a.setEndereco(rs.getString(5));
+                    a.setCpf(rs.getString(6));
+                    a.setRg(rs.getString(7));
+                    a.setTelefone(rs.getString(8));
                     
                     lista.add(a);
                     
