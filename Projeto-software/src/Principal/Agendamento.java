@@ -8,9 +8,12 @@ package Principal;
 import DAO.*;
 import Modelo.*;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -29,6 +32,85 @@ public class Agendamento extends javax.swing.JFrame {
         AtualizaComboServ();
         AtualizaComboAnimal();
         AtualizaComboCliente();
+        AtualizaDate();
+        AtualizaTable();
+    }
+    
+    public void AtualizaTable() {
+        
+        Connection con = Conexao.AbrirConexao();
+        CompraDAO bd = new CompraDAO(con);
+        List<Compra> lista = new ArrayList<>();
+        lista = bd.ListarCompra();
+        
+        DefaultTableModel tbm = (DefaultTableModel) jTable1.getModel();
+        
+        while (tbm.getRowCount() > 0) {
+            
+            tbm.removeRow(0);
+            
+        }
+
+        int i = 0;
+        for (Compra tab : lista) {
+            
+            tbm.addRow(new String[i]);
+            jTable1.setValueAt(tab.getId_compra(), i, 0);
+            jTable1.setValueAt(tab.getCpf_cliente(), i, 1);
+            jTable1.setValueAt(tab.getId_animal(), i, 2);
+            jTable1.setValueAt(tab.getLista_serv(), i, 3);
+            jTable1.setValueAt(tab.getTotal(), i, 4);
+            jTable1.setValueAt(tab.getFormaPag(), i, 5);
+            jTable1.setValueAt(tab.getDataAtual(), i, 6);
+            jTable1.setValueAt(tab.getDataAgend(), i, 7);
+
+
+            i++;
+            
+        }
+        
+        Conexao.FecharConexao(con);
+        
+    }
+    
+    public void PesquisaNome(){
+        
+        Connection con = Conexao.AbrirConexao();
+        CompraDAO bd = new CompraDAO(con);
+        List<Compra> lista = new ArrayList<>();
+        lista = bd.Pesquisar_Nome_Cod(Integer.parseInt(jTextField1.getText()));
+        
+        DefaultTableModel tbm = (DefaultTableModel) jTable1.getModel();
+        
+        while (tbm.getRowCount() > 0) {
+            
+            tbm.removeRow(0);
+            
+        }
+
+        int i = 0;
+        for (Compra tab : lista) {
+            
+            tbm.addRow(new String[i]);
+            jTable1.setValueAt(tab.getId_compra(), i, 0);
+            jTable1.setValueAt(tab.getCpf_cliente(), i, 1);
+            jTable1.setValueAt(tab.getId_animal(), i, 2);
+            jTable1.setValueAt(tab.getLista_serv(), i, 3);
+            jTable1.setValueAt(tab.getTotal(), i, 4);
+            jTable1.setValueAt(tab.getFormaPag(), i, 5);
+            jTable1.setValueAt(tab.getDataAtual(), i, 5);
+            jTable1.setValueAt(tab.getDataAgend(), i, 5);
+            jTable1.setValueAt(tab.getFormaPag(), i, 5);
+            jTable1.setValueAt(tab.getFormaPag(), i, 5);
+
+            i++;
+            
+        }
+        
+        jTextField1.setText("");
+        
+        Conexao.FecharConexao(con);
+        
     }
     
     private void AtualizaComboServ(){
@@ -134,6 +216,14 @@ public class Agendamento extends javax.swing.JFrame {
         Conexao.FecharConexao(con);
         
     }
+
+    public void AtualizaDate() {
+        
+        Date date = new Date();
+        SimpleDateFormat data = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat hora = new SimpleDateFormat("hh:mm");
+        jtfData.setText(data.format(date));        
+    }
     
     public void inserirCompra() {
         
@@ -143,8 +233,10 @@ public class Agendamento extends javax.swing.JFrame {
         String desconto = jtfDesconto.getText();
         String total = jtfTotal.getText();
         String pagamento = jcbPagamento.getSelectedItem().toString();
+        String dataAtu = jtfData.getText();
+        String dataAgend = jFormattedTextField2.getText();
         
-        if (cpf.equals("") && codAnimal.equals("") && serv.equals("") && desconto.equals("") && total.equals("") && pagamento.equals("")) {
+        if (dataAtu.equals("") && cpf.equals("") && codAnimal.equals("") && serv.equals("") && desconto.equals("") && total.equals("") && pagamento.equals("")) {
             
             JOptionPane.showMessageDialog(null, "Nenhum campo pode estar vazio!", "", JOptionPane.WARNING_MESSAGE);
             
@@ -165,6 +257,8 @@ public class Agendamento extends javax.swing.JFrame {
             a.setDesconto(desc);
             a.setTotal(tot);
             a.setFormaPag(pagamento);
+            a.setDataAtual(dataAtu);
+            a.setDataAgend(dataAgend);
 
             sql.Inserir_Compra(a);
             Conexao.FecharConexao(con);
@@ -174,6 +268,7 @@ public class Agendamento extends javax.swing.JFrame {
             jtfDesconto.setText("");
             jtfTotal.setText("");
             jtfServico.setText("");
+            jFormattedTextField2.setText("");
                     
             JOptionPane.showMessageDialog(null, "Agendamento realizado com sucesso!", "", JOptionPane.INFORMATION_MESSAGE);
             dispose();
@@ -215,9 +310,9 @@ public class Agendamento extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jcbServico = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jLabel11 = new javax.swing.JLabel();
-        jFormattedTextField3 = new javax.swing.JFormattedTextField();
+        jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        jtfData = new javax.swing.JFormattedTextField();
         jPanel8 = new javax.swing.JPanel();
         jToggleButton1 = new javax.swing.JToggleButton();
         jToggleButton2 = new javax.swing.JToggleButton();
@@ -228,6 +323,10 @@ public class Agendamento extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel11 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jToggleButton3 = new javax.swing.JToggleButton();
         jToggleButton4 = new javax.swing.JToggleButton();
@@ -331,16 +430,21 @@ public class Agendamento extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel10.setText("Data Agendamento");
 
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel11.setText("Data procedimento");
+
         try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("## / ## / ####")));
+            jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel11.setText("Data procedimento");
-
-        jFormattedTextField3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("## / ## / ####")));
+        jtfData.setEditable(false);
+        try {
+            jtfData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -362,13 +466,15 @@ public class Agendamento extends javax.swing.JFrame {
                                 .addComponent(jtfDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(48, 48, 48)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jFormattedTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(41, 41, 41))
+                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jFormattedTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                            .addComponent(jtfData))
+                        .addGap(33, 33, 33))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -398,11 +504,11 @@ public class Agendamento extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jFormattedTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtfData, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jcbNome, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -529,11 +635,11 @@ public class Agendamento extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Tipo", "Raça", "Tamanho", "Peso", "Idade", "Nome"
+                "ID", "CPF - Cliente", "ID - Animal", "Servico", "Total", "Pagamento", "Agendamento", "Consulta"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -545,15 +651,54 @@ public class Agendamento extends javax.swing.JFrame {
         jPanel11.setBackground(new java.awt.Color(255, 255, 255));
         jPanel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel12.setText("Cod");
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("TODOS");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("OK");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(37, 37, 37))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 63, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15))
         );
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -568,7 +713,7 @@ public class Agendamento extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE))
         );
 
         jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -677,6 +822,27 @@ public class Agendamento extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jToggleButton4ActionPerformed
 
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+        
+        PesquisaNome();
+        
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        AtualizaTable();
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        PesquisaNome();
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -714,11 +880,13 @@ public class Agendamento extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField3;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -741,6 +909,7 @@ public class Agendamento extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
@@ -751,6 +920,7 @@ public class Agendamento extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jcbServico;
     private javax.swing.JTextField jtfAnimal;
     private javax.swing.JTextField jtfCpf;
+    private javax.swing.JFormattedTextField jtfData;
     private javax.swing.JTextField jtfDesconto;
     private javax.swing.JTextField jtfServico;
     private javax.swing.JTextField jtfTotal;

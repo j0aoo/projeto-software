@@ -9,13 +9,31 @@ public class Compra {
     private double desconto;
     private double total;
     private String formaPag;
-
+    private String dataAtual;
+    private String dataAgend;
+    
     public int getId_compra() {
         return id_compra;
     }
 
     public void setId_compra(int id_compra) {
         this.id_compra = id_compra;
+    }
+
+    public String getDataAtual() {
+        return dataAtual;
+    }
+
+    public void setDataAtual(String dataAtual) {
+        this.dataAtual = dataAtual;
+    }
+
+    public String getDataAgend() {
+        return dataAgend;
+    }
+
+    public void setDataAgend(String dataAgend) {
+        this.dataAgend = dataAgend;
     }
 
     public String getCpf_cliente() {
