@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 23-Fev-2019 às 17:46
+-- Generation Time: 05-Mar-2019 às 21:48
 -- Versão do servidor: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -100,7 +100,9 @@ CREATE TABLE `compra` (
   `listaServ` varchar(100) NOT NULL,
   `desconto` double DEFAULT NULL,
   `total` double DEFAULT NULL,
-  `formaPagamento` varchar(30) DEFAULT NULL
+  `formaPagamento` varchar(30) DEFAULT NULL,
+  `dataAtual` varchar(16) NOT NULL,
+  `dataAgend` varchar(16) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -198,7 +200,7 @@ ALTER TABLE `servicos`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `animais`
@@ -222,7 +224,7 @@ ALTER TABLE `compra`
 -- AUTO_INCREMENT for table `secretaria`
 --
 ALTER TABLE `secretaria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `servicos`
